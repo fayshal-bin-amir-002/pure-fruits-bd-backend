@@ -8,12 +8,7 @@ import Order from "./order.model";
 import { Types } from "mongoose";
 import QueryBuilder from "../../builder/QueryBuilder";
 
-const createOrder = async (user: IJwtPayload, payload: IOrder) => {
-  const isUserExists = await User.isUserExists(user?.phone_number);
-  if (!isUserExists) {
-    throw new AppError(httpStatus.NOT_FOUND, "User not found!");
-  }
-
+const createOrder = async (payload: IOrder) => {
   for (const orderedFruit of payload.fruits) {
     const fruit = await Fruit.findById(orderedFruit.fruit);
 

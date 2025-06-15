@@ -3,13 +3,9 @@ import sendResponse from "../../utils/sendResponse";
 
 import httpStatus from "http-status";
 import { OrderServices } from "./order.service";
-import { IJwtPayload } from "../../utils/token.utils";
 
 const createOrder = catchAsync(async (req, res) => {
-  const result = await OrderServices.createOrder(
-    req.user as IJwtPayload,
-    req.body
-  );
+  const result = await OrderServices.createOrder(req.body);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
