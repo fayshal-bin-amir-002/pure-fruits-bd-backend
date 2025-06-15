@@ -49,17 +49,13 @@ const orderStatusChange = catchAsync(async (req, res) => {
   });
 });
 
-const getMyOrders = catchAsync(async (req, res) => {
-  const { result, meta } = await OrderServices.getMyOrders(
-    req.user as IJwtPayload,
-    req.query
-  );
+const getMyOrder = catchAsync(async (req, res) => {
+  const result = await OrderServices.getMyOrder(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "User all order retrived successfully.",
+    message: "Order retrived successfully.",
     data: result,
-    meta: meta,
   });
 });
 
@@ -68,5 +64,5 @@ export const OrderController = {
   getAllOrder,
   getAOrder,
   orderStatusChange,
-  getMyOrders,
+  getMyOrder,
 };

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { UnitType } from "../fruit/fruit.interface";
 import { OrderStatus } from "./order.interface";
 
 const objectId = z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid ObjectId");
@@ -11,7 +10,6 @@ const orderedFruitSchema = z.object({
 
 const create = z.object({
   body: z.object({
-    customer: objectId.optional(),
     name: z.string().min(2, "Name must be at least 2 characters"),
     address: z.string().min(4, "Name must be at least 4 characters"),
     contact_number: z

@@ -19,11 +19,6 @@ const orderedFruitSchema = new Schema(
 
 const orderSchema = new Schema<IOrder>(
   {
-    customer: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
     name: {
       type: String,
       required: [true, "Customer name is required"],

@@ -32,8 +32,6 @@ const createOrder = async (user: IJwtPayload, payload: IOrder) => {
     }
   }
 
-  payload.customer = isUserExists._id as Types.ObjectId;
-
   const result = await Order.create(payload);
 
   return result;
@@ -47,9 +45,7 @@ const getAllOrder = async (query: Record<string, unknown>) => {
     .paginate()
     .fields();
 
-  const result = await orderQuery.modelQuery
-    .populate("customer")
-    .populate("fruits.fruit");
+  const result = await orderQuery.modelQuery.populate("fruits.fruit");
   const meta = await orderQuery.countTotal();
 
   return {
@@ -59,9 +55,7 @@ const getAllOrder = async (query: Record<string, unknown>) => {
 };
 
 const getAOrder = async (id: string) => {
-  const result = await Order.findById(id)
-    .populate("customer")
-    .populate("fruits.fruit");
+  const result = await Order.findById(id).populate("fruits.fruit");
   if (!result) {
     throw new AppError(httpStatus.NOT_FOUND, "Order not found!");
   }
@@ -86,33 +80,12 @@ const orderStatusChange = async (
   return result;
 };
 
-const getMyOrders = async (
-  user: IJwtPayload,
-  query: Record<string, unknown>
-) => {
-  const isUserExists = await User.isUserExists(user?.phone_number);
-  if (!isUserExists) {
-    throw new AppError(httpStatus.NOT_FOUND, "User not found!");
+const getMyOrder = async (id: string) => {
+  const result = await Order.findById(id).populate("fruits.fruit");
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, "Order not found with this Id!");
   }
-  const orderQuery = new QueryBuilder(
-    Order.find({ customer: isUserExists._id }),
-    query
-  )
-    .search(["contact_number"])
-    .filter()
-    .sort()
-    .paginate()
-    .fields();
-
-  const result = await orderQuery.modelQuery
-    .populate("customer")
-    .populate("fruits.fruit");
-  const meta = await orderQuery.countTotal();
-
-  return {
-    result,
-    meta,
-  };
+  return result;
 };
 
 export const OrderServices = {
@@ -120,5 +93,5 @@ export const OrderServices = {
   getAllOrder,
   getAOrder,
   orderStatusChange,
-  getMyOrders,
+  getMyOrder,
 };

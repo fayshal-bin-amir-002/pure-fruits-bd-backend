@@ -12,7 +12,6 @@ export enum OrderStatus {
 }
 
 export interface IOrder extends Document {
-  customer: Types.ObjectId;
   name: string;
   contact_number: string;
   address: string;

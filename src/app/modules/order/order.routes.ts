@@ -16,7 +16,7 @@ router.post(
 
 router.get("/", auth(UserRole.ADMIN), OrderController.getAllOrder);
 
-router.get("/my-orders", auth(UserRole.USER), OrderController.getMyOrders);
+router.get("/my-order/:id", OrderController.getMyOrder);
 
 router.get(
   "/:id",
