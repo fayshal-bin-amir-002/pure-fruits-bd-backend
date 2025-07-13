@@ -10,7 +10,7 @@ const app: Application = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://pure-fruits.vercel.app", "http://localhost:3000"],
+    origin: ["https://pure-fruits-bd.vercel.app"],
     credentials: true,
   })
 );
