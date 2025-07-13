@@ -8,13 +8,13 @@ const app: Application = express();
 
 // parsers
 app.use(express.json());
+app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://pure-fruits-bd.vercel.app"],
+    origin: "https://pure-fruits-bd.vercel.app",
     credentials: true,
   })
 );
-app.use(cookieParser());
 
 app.use("/api/v1", router);
 
